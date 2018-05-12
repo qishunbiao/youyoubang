@@ -1,7 +1,7 @@
 <template>
   <div class="jobsContainer">
       <div class="jobs" v-for="(job,index) in jobs" :key="index">
-        <jobCell :job="job"/>
+        <jobCell :job="job" :formatTime="formatTime"/>
       </div>
     </div>	
     
@@ -23,6 +23,10 @@ export default {
 }
 </script>
 <style scoped>
+.jobsContainer {
+  width: 100%;
+}
+
 .jobs {
    width: 100%;
     box-sizing: border-box;

@@ -1,11 +1,11 @@
 import {FETCH_USERINFO, ApID, AppSecret, baseHost} from '../stores/mutations-type'
 
-function formatNumber (n) {
-  const str = n.toString()
-  return str[1] ? str : `0${str}`
-}
-
 export function formatTime (date) {
+  function formatNumber (n) {
+    const str = n.toString()
+    return str[1] ? str : `0${str}`
+  }
+
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()

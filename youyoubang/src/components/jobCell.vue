@@ -11,7 +11,7 @@
                         </div>
                         <div class='rightInfo'>
                             <div class="number"><span class="iconfont icon-weibiaoti-_huabanfuben icons"/><span>{{job.peopleNum}}</span></div>
-                            <span class="release-date"><span class="iconfont icon-icon icons"/><span>{{job.createTime}}</span></span>
+                            <span class="release-date"><span class="iconfont icon-icon icons"/><span>{{createTime}}</span></span>
                         </div>
                     </div>
                         <button type="primary" class="apply-btn">申请</button>                        
@@ -19,18 +19,28 @@
 </template>
 <script>
 export default {
-  props: {
-    job: {
-      type: Object,
-      default () {
-        return {}
-      }
+  mounted () { console.log(this) },
+  data () {
+    return {
+      createTime: this.format(this.job.createTime)
     }
   },
-  jobs: {
-    type: Object,
-    default () {
-      return {}
+  props: ['job', 'formatTime'],
+  methods: {
+    format: function formatTime (date) {
+      let DATE = new Date(date)
+      function formatNumber (n) {
+        const str = n.toString()
+        return str[1] ? str : `0${str}`
+      }
+
+      const year = DATE.getFullYear()
+      const month = DATE.getMonth() + 1
+      const day = DATE.getDate()
+
+      const t1 = [year, month, day].map(formatNumber).join('/')
+
+      return `${t1}`
     }
   }
 }
