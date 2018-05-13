@@ -10,16 +10,18 @@
                             <span class="requirement"><span class="iconfont icon-xiaoxi icons"></span>{{job.depict}}</span>
                         </div>
                         <div class='rightInfo'>
-                            <div class="number"><span class="iconfont icon-weibiaoti-_huabanfuben icons"/><span>{{job.peopleNum}}</span></div>
+                            <div class="number"><span class="iconfont icon-weibiaoti-_huabanfuben icons"/><span>{{job.applynum + '/' + job.peopleNum}}</span></div>
                             <span class="release-date"><span class="iconfont icon-icon icons"/><span>{{createTime}}</span></span>
                         </div>
                     </div>
-                        <button type="primary" class="apply-btn">申请</button>                        
+                        <button type="primary" :class="{'apply-btn': true, 'hide': job.isApply}" @click="userApply({id: job.id})">申请</button>                        
+                        <button type="primary" :class="{'unapply-btn': true, 'hide': !job.isApply}" @click="userUnApply({id: job.id})">已申请</button>
                 </div>
 </template>
 <script>
+import {mapActions} from 'vuex'
+import {USER_APPLY, USER_UNAPPLY} from '../stores/mutations-type'
 export default {
-  mounted () { console.log(this) },
   data () {
     return {
       createTime: this.format(this.job.createTime)
@@ -27,6 +29,10 @@ export default {
   },
   props: ['job', 'formatTime'],
   methods: {
+    ...mapActions({
+      userApply: USER_APPLY,
+      userUnApply: USER_UNAPPLY
+    }),
     format: function formatTime (date) {
       let DATE = new Date(date)
       function formatNumber (n) {
@@ -47,6 +53,10 @@ export default {
 </script>
 <style scoped>
 @import url('../shared/iconfont.css');
+
+.hide {
+    display: none;
+}
 
 .icons {
     padding-right: 10rpx;
@@ -106,6 +116,15 @@ export default {
     height: 70rpx;
     font-size: 14px;
     background-color: rgb(72,118,255);
+    margin-top: 20rpx;
+}
+
+.unapply-btn {
+    float: right;
+    width: 180rpx;
+    height: 70rpx;
+    font-size: 14px;
+    background-color: #1aad19;
     margin-top: 20rpx;
 }
 </style>

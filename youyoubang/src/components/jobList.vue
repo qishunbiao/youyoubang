@@ -25,6 +25,7 @@ export default {
 <style scoped>
 .jobsContainer {
   width: 100%;
+  margin-bottom: 100rpx;
 }
 
 .jobs {

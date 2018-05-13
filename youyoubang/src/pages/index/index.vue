@@ -30,10 +30,11 @@ import lostThingList from '@/components/lostThingList'
 
 export default {
   created () {
-    postUserInfo()
+    postUserInfo().then(res => {
+      if (res.status === 'success') this.fetchJobs()
+    })
     this.fetchUserInfo()
     this.fetchSliders()
-    this.fetchJobs()
     this.fetchLostTings()
   },
   data () {

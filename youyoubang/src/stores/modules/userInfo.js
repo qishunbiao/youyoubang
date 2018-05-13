@@ -1,4 +1,4 @@
-import {getUserInfo} from '@/utils'
+import {postUserInfo} from '@/utils'
 import {FETCH_USERINFO} from '../mutations-type'
 
 const state = {
@@ -7,7 +7,7 @@ const state = {
 
 const actions = {
   [FETCH_USERINFO] ({state, commit}) {
-    getUserInfo(state, commit)
+    postUserInfo(state, commit)
   }
 }
 

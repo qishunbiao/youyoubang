@@ -5,13 +5,18 @@
       </div>
       <div class="detailDescrition">
           <span><span class="iconfont icon-xiaoxi icons"></span><span>{{lostThing.depict}}</span></span>
-          <span class="release-date"><span class="iconfont icon-icon icons"/><span>{{lostThing.createTime}}</span></span>
+          <span class="release-date"><span class="iconfont icon-icon icons"/><span>{{createTime}}</span></span>
       </div>
   </div>
 </template>
 <script>
 import { previewImage } from '@/utils'
 export default {
+  data () {
+    return {
+      createTime: this.format(this.lostThing.createTime)
+    }
+  },
   props: ['lostThing', 'list'],
   methods: {
     scaleImg: function (...args) {
@@ -19,6 +24,21 @@ export default {
         currentUrl: args[0],
         imageList: args[1]
       })
+    },
+    format: function formatTime (date) {
+      let DATE = new Date(date)
+      function formatNumber (n) {
+        const str = n.toString()
+        return str[1] ? str : `0${str}`
+      }
+
+      const year = DATE.getFullYear()
+      const month = DATE.getMonth() + 1
+      const day = DATE.getDate()
+
+      const t1 = [year, month, day].map(formatNumber).join('/')
+
+      return `${t1}`
     }
   }
 }

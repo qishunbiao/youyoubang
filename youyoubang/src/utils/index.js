@@ -43,7 +43,6 @@ export const previewImage = ({currentUrl, imageList}) => {
 }
 
 export const post = (url, data = {}) => {
-  console.log(data)
   let contentType = 'application/json'
   return new Promise((resolve, reject) => {
     try {
@@ -53,7 +52,8 @@ export const post = (url, data = {}) => {
         method: 'POST',
         header: {'content-type': contentType},
         success (res) {
-          console.log(res)
+          console.log(res.data.data)
+          wx.setStorageSync('userid', res.data.data.userid)
           resolve(res.data)
         },
         fail (e) {
@@ -68,19 +68,20 @@ export const post = (url, data = {}) => {
 }
 
 export const postUserInfo = () => {
-  wx.login({
-    success: function (resLogin) {
-      console.log('successLogin')
-      if (resLogin.code) {
-        var requestUrl = `${baseHost}/getopendid`
-        var data = {
-          code: resLogin.code,
-          appsecret: AppSecret,
-          appid: ApID
+  return new Promise((resolve, reject) => {
+    wx.login({
+      success: function (resLogin) {
+        if (resLogin.code) {
+          var requestUrl = `${baseHost}/getopendid`
+          var data = {
+            code: resLogin.code,
+            appsecret: AppSecret,
+            appid: ApID
+          }
+          post(requestUrl, data).then(res => { resolve({status: 'success'}) }).catch(e => reject(e))
         }
-        post(requestUrl, data)
       }
-    }
+    })
   })
 }
 
